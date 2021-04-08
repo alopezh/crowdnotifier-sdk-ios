@@ -27,11 +27,16 @@ let package = Package(
             url: "https://github.com/apple/swift-protobuf.git",
             .exact("1.13.0")
         ),
+        .package(
+            name: "HKDF",
+            url: "https://github.com/Bouke/HKDF.git",
+            .exact("3.1.0")
+        ),
     ],
     targets: [
         .target(
             name: "CrowdNotifierSDK",
-            dependencies: ["SwiftProtobuf", "Clibsodium", "libmcl"],
+            dependencies: ["SwiftProtobuf", "HKDF", "Clibsodium", "libmcl"],
             exclude: ["libsodium", "Info.plist"]
         ),
         .binaryTarget(

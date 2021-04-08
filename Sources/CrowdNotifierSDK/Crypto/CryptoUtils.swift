@@ -8,9 +8,10 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-import Clibsodium
 import Foundation
+import Clibsodium
 import libmcl
+import HKDF
 
 final class CryptoUtils {
 
@@ -73,6 +74,12 @@ final class CryptoUtils {
 
         return exposureEvents
     }
+
+    public static func createHKDFKey(length: Int, inputKey: Bytes, salt: Bytes, info: Bytes) -> Bytes {
+        return HKDF.deriveKey(seed: inputKey.data, info: info.data, salt: salt.data, count: length).bytes
+    }
+
+    // MARK: - Private helper methods
 
     private static func encryptInternal(message: Bytes, identity: Bytes, masterPublicKey: mclBnG2) -> EncryptedData? {
         let nonceX = randombytes_buf()
